@@ -20,11 +20,11 @@ RUN apt-get update > /dev/null \
     && apt-get install -y supervisor erlang-base erlang-nox > /dev/null \
     && dpkg -i /tmp/rabbitmq-server.deb 2> /dev/null \
     && apt-get clean > /dev/null \
-    && rm /tmp/*.deb
+    && rm /tmp/*.deb \
+    && chown -R rabbitmq:rabbitmq /var/lib/rabbitmq
 
 COPY supervisor.conf /etc/supervisor/supervisor.conf
 
 USER root
 EXPOSE 5672
-ENTRYPOINT ["/usr/bin/supervisord"]
-CMD ["-c", "/etc/supervisor/supervisor.conf"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisor.conf"]
