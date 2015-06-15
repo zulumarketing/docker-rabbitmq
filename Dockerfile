@@ -19,10 +19,9 @@ RUN apt-get update > /dev/null \
     && apt-get update > /dev/null \
     && apt-get install -y supervisor erlang-base erlang-nox > /dev/null \
     && dpkg -i /tmp/rabbitmq-server.deb 2> /dev/null \
-    && apt-get clean > /dev/null
+    && apt-get clean > /dev/null \
+    && rm /tmp/*.deb
 
-RUN mkdir -p /root/bin
-COPY run.sh /root/bin/run.sh
 COPY supervisor.conf /etc/supervisor/supervisor.conf
 
 USER root
